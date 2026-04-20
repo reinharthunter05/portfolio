@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinhart Projects | Game Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css2?family=inter:wght@300;400;500;600;700;800;900&family=jetbrains-mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #2b0036; color: #e0e0e0; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #014922; }
+        ::-webkit-scrollbar-thumb { background: #00a194; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00dabd; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 5px #22c55e44, 0 0 20px #22c55e22; } 50% { box-shadow: 0 0 10px #22c55e66, 0 0 40px #22c55e33; } }
+
+        .animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
+        .animate-fadeIn { animation: fadeIn 0.6s ease forwards; }
+        .animate-slideInLeft { animation: slideInLeft 0.8s ease forwards; }
+        .animate-scaleIn { animation: scaleIn 0.6s ease forwards; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+        .animate-glow { animation: glow 3s ease-in-out infinite; }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #22c55e, #4ade80, #10b981, #22c55e);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 4s ease infinite;
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(34, 197, 94, 0.1);
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.15);
+        }
+        .project-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .nav-glass {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #22c55e, #10b981);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: #fff; }
+
+        .skill-bar-fill {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid rgba(34, 197, 94, 0.5);
+            transition: all 0.3s;
+        }
+        .btn-outline:hover {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+        }
+
+        .input-field {
+            background: rgba(34, 197, 94, 0.03);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            transition: all 0.3s;
+        }
+        .input-field:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+            outline: none;
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open { transform: translateX(0); }
+
+        .filter-btn.active {
+            background: #22c55e !important;
+            color: white !important;
+        }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        card: '#111111',
+                        accent: '#22c55e',
+                        'accent-light': '#4ade80',
+                        'accent-dark': '#16a34a',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="grid-pattern">
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="nav-glass fixed top-0 left-0 right-0 z-50 border-b border-green-900/30">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="#hero" class="flex items-center gap-2 group">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center font-mono font-bold text-white text-sm group-hover:scale-110 transition-transform animate-glow">R</div>
+                    <span class="font-semibold text-white text-lg tracking-tight">Reinhart<span class="text-green-500">.</span></span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#about" class="nav-link text-sm text-gray-400">About</a>
+                    <a href="#projects" class="nav-link text-sm text-gray-400">Games</a>
+                    <a href="#skills" class="nav-link text-sm text-gray-400">Skills</a>
+                    <a href="#experience" class="nav-link text-sm text-gray-400">Experience</a>
+                    <a href="#contact" class="btn-primary px-5 py-2 rounded-full text-sm font-medium text-white">Contact Me</a>
+                </div>
+
+                <button id="menuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+                    <span class="w-6 h-0.5 bg-white transition-all" id="bar1"></span>
+                    <span class="w-6 h-0.5 bg-white transition-all" id="bar2"></span>
+                    <span class="w-4 h-0.5 bg-white transition-all" id="bar3"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 bottom-0 w-72 bg-darker/95 backdrop-blur-xl z-50 border-l border-green-900/30">
+        <div class="p-6 flex justify-end">
+            <button id="closeMenu" class="text-white text-2xl">&times;</button>
+        </div>
+        <div class="flex flex-col gap-6 px-6">
+            <a href="#about" class="mobile-nav-link text-lg text-gray-300 hover:text-green-400 transition-colors">About</a>
+            <a href="#projects" class="mobile-nav-link text-lg text-gray-300 hover:text-green-400 transition-colors">Games</a>
+            <a href="#skills" class="mobile-nav-link text-lg text-gray-300 hover:text-green-400 transition-colors">Skills</a>
+            <a href="#experience" class="mobile-nav-link text-lg text-gray-300 hover:text-green-400 transition-colors">Experience</a>
+            <a href="#contact" class="mobile-nav-link text-lg text-gray-300 hover:text-green-400 transition-colors">Contact</a>
+            <a href="#contact" class="btn-primary mt-4 px-6 py-3 rounded-full text-center font-medium">Get in Touch</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="glow-orb w-96 h-96 bg-green-500/20 top-1/4 -left-48 animate-float"></div>
+        <div class="glow-orb w-80 h-80 bg-emerald-500/15 bottom-1/4 -right-40 animate-float" style="animation-delay: -3s;"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+            <div class="animate-fadeInUp">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-900/30 border border-green-500/20 mb-8">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    <span class="text-sm text-green-400 font-mono">Game Developer &nbsp;•&nbsp; Godot Expert</span>
+                </div>
+            </div>
+
+            <h1 class="animate-fadeInUp delay-200">
+                <span class="block text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-2">I'm</span>
+                <span class="block text-6xl md:text-8xl lg:text-9xl font-black gradient-text tracking-tighter">Reinhart</span>
+            </h1>
+
+            <p class="animate-fadeInUp delay-300 mt-6 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Building immersive <span class="text-green-400 font-medium">2D & 3D games</span> with 
+                <span class="text-green-400 font-medium">Godot Engine</span> and crafting robust game systems in 
+                <span class="text-green-400 font-medium">Java</span>.
+            </p>
+
+            <div class="animate-fadeInUp delay-400 mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#projects" class="btn-primary px-8 py-4 rounded-full font-semibold text-white flex items-center gap-2">
+                    🎮 View My Games
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </a>
+                <a href="#contact" class="btn-outline px-8 py-4 rounded-full font-semibold text-white flex items-center gap-2">
+                    Let's Collaborate
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+
+            <div class="animate-fadeInUp delay-700 mt-20">
+                <div class="w-6 h-10 rounded-full border-2 border-green-500/30 mx-auto flex items-start justify-center p-1">
+                    <div class="w-1 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="relative py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal">
+                <span class="font-mono text-green-500 text-sm tracking-wider uppercase">01. About Me</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-12">Game Developer &<br><span class="gradient-text">Creative Coder</span></h2>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+                <div class="reveal delay-200">
+                    <div class="relative">
+                        <div class="aspect-square max-w-md rounded-2xl overflow-hidden bg-gradient-to-br from-green-500/20 to-emerald-600/20 border border-green-500/10 animate-glow">
+                            <div class="w-full h-full flex items-center justify-center bg-dark relative p-8">
+                                <svg viewBox="0 0 400 400" class="w-full h-full">
+                                    <defs>
+                                        <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.4" />
+                                            <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.4" />
+                                        </linearGradient>
+                                        <filter id="glow">
+                                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                        </filter>
+                                    </defs>
+                                    <rect width="400" height="400" fill="#0a0a0a" rx="16" />
+                                    <!-- Game Controller Icon -->
+                                    <rect x="140" y="130" width="120" height="70" rx="35" fill="url(#avatarGrad)" filter="url(#glow)" />
+                                    <circle cx="175" cy="165" r="8" fill="#0a0a0a" />
+                                    <circle cx="225" cy="165" r="8" fill="#0a0a0a" />
+                                    <circle cx="175" cy="165" r="4" fill="#22c55e" opacity="0.8" />
+                                    <circle cx="225" cy="165" r="4" fill="#22c55e" opacity="0.8" />
+                                    <rect x="160" y="155" width="20" height="4" rx="2" fill="#0a0a0a" opacity="0.5" />
+                                    <!-- Pixels -->
+                                    <rect x="100" y="250" width="20" height="20" rx="4" fill="#22c55e" opacity="0.6" />
+                                    <rect x="130" y="250" width="20" height="20" rx="4" fill="#4ade80" opacity="0.8" />
+                                    <rect x="160" y="250" width="20" height="20" rx="4" fill="#22c55e" opacity="0.6" />
+                                    <rect x="190" y="250" width="20" height="20" rx="4" fill="#10b981" opacity="0.7" />
+                                    <rect x="220" y="250" width="20" height="20" rx="4" fill="#22c55e" opacity="0.5" />
+                                    <rect x="250" y="250" width="20" height="20" rx="4" fill="#4ade80" opacity="0.6" />
+                                    <rect x="280" y="250" width="20" height="20" rx="4" fill="#22c55e" opacity="0.8" />
+                                    <!-- Text -->
+                                    <text x="200" y="360" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono" font-size="16" font-weight="bold" filter="url(#glow)">REINHART</text>
+                                    <text x="200" y="385" text-anchor="middle" fill="#4ade80" font-family="JetBrains Mono" font-size="11" opacity="0.6">GAME DEV</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 w-24 h-24 border border-green-500/20 rounded-2xl"></div>
+                        <div class="absolute -bottom-4 -left-4 w-32 h-32 border border-green-500/10 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div class="reveal delay-300 space-y-6">
+                    <p class="text-gray-400 leading-relaxed text-lg">
+                        I'm a <span class="text-green-400 font-medium">passionate game developer</span> specializing in the 
+                        <span class="text-green-400 font-medium">Godot Engine</span>. I love creating immersive gameplay experiences 
+                        with clean, efficient code and polished mechanics.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        With strong skills in <span class="text-green-400">Java</span> for backend systems and tool development, 
+                        plus hands-on experience in <span class="text-emerald-400">Python</span> and 
+                        <span class="text-green-300">HTML/JavaScript</span> for game-related web projects, I bring a versatile 
+                        skill set to every game I build.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        From 2D platformers to 3D adventures, I enjoy the full pipeline — design, programming, testing, and publishing. 
+                        Currently focused on creating original indie games with Godot 4.x.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-green-900/30 mt-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-400">10+</div>
+                            <div class="text-sm text-gray-500 mt-1">Games Built</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-400">3+</div>
+                            <div class="text-sm text-gray-500 mt-1">Years Dev</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-400">5+</div>
+                            <div class="text-sm text-gray-500 mt-1">Game Jams</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="relative py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal">
+                <span class="font-mono text-green-500 text-sm tracking-wider uppercase">02. Game Portfolio</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-4">My <span class="gradient-text">Games & Projects</span></h2>
+                <p class="text-gray-400 max-w-xl text-lg">A showcase of games and interactive experiences I've built across different genres and platforms.</p>
+            </div>
+
+            <div class="reveal delay-200 flex flex-wrap gap-3 mt-10 mb-12">
+                <button class="filter-btn active px-5 py-2 rounded-full text-sm font-medium transition-all bg-green-500 text-white" data-filter="all">All</button>
+                <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all bg-green-900/30 text-gray-400 hover:bg-green-900/50" data-filter="godot">Godot</button>
+                <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all bg-green-900/30 text-gray-400 hover:bg-green-900/50" data-filter="java">Java</button>
+                <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all bg-green-900/30 text-gray-400 hover:bg-green-900/50" data-filter="web">Web</button>
+            </div>
+
+            <div id="projectsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 - Godot Platformer -->
+                <div class="project-card reveal delay-100 rounded-2xl overflow-hidden bg-card" data-category="godot">
+                    <div class="relative h-52 overflow-hidden bg-gradient-to-br from-green-600/20 to-emerald-900/20">
+                        <svg viewBox="0 0 400 250" class="w-full h-full card-image transition-transform duration-500">
+                            <rect width="400" height="250" fill="#0a0a0a" />
+                            <!-- Sky -->
+                            <rect x="0" y="0" width="400" height="180" fill="#111811" />
+                            <!-- Ground -->
+                            <rect x="0" y="180" width="400" height="70" fill="#1a1a1a" />
+                            <rect x="0" y="180" width="400" height="4" fill="#22c55e" opacity="0.3" />
+                            <!-- Platforms -->
+                            <rect x="40" y="140" width="80" height="12" rx="6" fill="#22c55e" opacity="0.4" />
+                            <rect x="160" y="120" width="100" height="12" rx="6" fill="#22c55e" opacity="0.5" />
+                            <rect x="300" y="150" width="70" height="12" rx="6" fill="#22c55e" opacity="0.4" />
+                            <!-- Player -->
+                            <rect x="180" y="90" width="20" height="28" rx="4" fill="#4ade80" />
+                            <circle cx="190" cy="95" r="3" fill="#0a0a0a" />
+                            <!-- Coins -->
+                            <circle cx="80" cy="130" r="6" fill="#fbbf24" opacity="0.8" />
+                            <circle cx="200" cy="110" r="6" fill="#fbbf24" opacity="0.8" />
+                            <circle cx="335" cy="140" r="6" fill="#fbbf24" opacity="0.8" />
+                            <!-- UI -->
+                            <rect x="10" y="10" width="60" height="24" rx="12" fill="#1a1a1a" />
+                            <circle cx="24" cy="22" r="6" fill="#fbbf24" />
+                            <text x="38" y="26" fill="white" font-size="10" font-family="monospace">x3</text>
+                            <text x="380" y="26" text-anchor="end" fill="white" font-size="10" font-family="monospace">100</text>
+                        </svg>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-900/50 backdrop-blur-sm text-xs font-mono text-green-400 border border-green-500/20">Godot 4</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">🌿 Pixel Quest</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">A retro-style 2D platformer with hand-crafted levels, smooth character controls, collectibles, and a dynamic parallax background system.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">Godot 4</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">GDScript</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">Pixel Art</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-sm text-white hover:text-green-400 transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                Play Demo
+                            </a>
+                            <a href="#" class="text-sm text-gray-500 hover:text-white transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 - Java RPG Engine -->
+                <div class="project-card reveal delay-200 rounded-2xl overflow-hidden bg-card" data-category="java">
+                    <div class="relative h-52 overflow-hidden bg-gradient-to-br from-emerald-600/20 to-teal-900/20">
+                        <svg viewBox="0 0 400 250" class="w-full h-full card-image transition-transform duration-500">
+                            <rect width="400" height="250" fill="#0a0a0a" />
+                            <!-- Map Grid -->
+                            <rect x="30" y="30" width="340" height="190" rx="4" fill="#111" />
+                            <line x1="30" y1="67" x2="370" y2="67" stroke="#1a1a1a" stroke-width="1" />
+                            <line x1="30" y1="104" x2="370" y2="104" stroke="#1a1a1a" stroke-width="1" />
+                            <line x1="30" y1="141" x2="370" y2="141" stroke="#1a1a1a" stroke-width="1" />
+                            <line x1="30" y1="178" x2="370" y2="178" stroke="#1a1a1a" stroke-width="1" />
+                            <line x1="98" y1="30" x2="98" y2="220" stroke="#1a1a1a" stroke-width="1" />
+                            <line x1="166" y1="30" x2="166" y2="220" stroke="#1a1a1a" stroke-width="1" />
+                            <line x1="234" y1="30" x2="234" y2="220" stroke="#1a1a1a" stroke-width="1" />
+                            <line x1="302" y1="30" x2="302" y2="220" stroke="#1a1a1a" stroke-width="1" />
+                            <!-- Tiles -->
+                            <rect x="30" y="30" width="68" height="37" fill="#166534" opacity="0.3" />
+                            <rect x="98" y="67" width="68" height="37" fill="#166534" opacity="0.4" />
+                            <rect x="234" y="104" width="68" height="37" fill="#15803d" opacity="0.3" />
+                            <rect x="166" y="141" width="68" height="37" fill="#166534" opacity="0.2" />
+                            <!-- Character -->
+                            <rect x="115" y="152" width="18" height="22" rx="3" fill="#4ade80" />
+                            <circle cx="124" cy="157" r="2" fill="#0a0a0a" />
+                            <!-- NPC -->
+                            <rect x="250" y="115" width="18" height="22" rx="3" fill="#fbbf24" opacity="0.8" />
+                            <circle cx="259" cy="120" r="2" fill="#0a0a0a" />
+                            <!-- Dialog Box -->
+                            <rect x="140" y="185" width="180" height="40" rx="4" fill="#1a1a1a" stroke="#22c55e" stroke-width="1" />
+                            <rect x="150" y="195" width="120" height="4" rx="2" fill="#22c55e" opacity="0.4" />
+                            <rect x="150" y="205" width="80" height="4" rx="2" fill="#333" />
+                        </svg>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-900/50 backdrop-blur-sm text-xs font-mono text-green-400 border border-green-500/20">Java</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">⚔️ Java RPG Engine</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">A lightweight 2D RPG game engine built in Java with tilemap rendering, entity-component system, dialogue system, and inventory management.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">Java</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">LWJGL</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">OpenGL</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-sm text-white hover:text-green-400 transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                View Demo
+                            </a>
+                            <a href="#" class="text-sm text-gray-500 hover:text-white transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 - Godot Top Down -->
+                <div class="project-card reveal delay-300 rounded-2xl overflow-hidden bg-card" data-category="godot">
+                    <div class="relative h-52 overflow-hidden bg-gradient-to-br from-lime-600/20 to-green-900/20">
+                        <svg viewBox="0 0 400 250" class="w-full h-full card-image transition-transform duration-500">
+                            <rect width="400" height="250" fill="#0a0a0a" />
+                            <!-- Isometric Ground -->
+                            <rect x="50" y="60" width="300" height="160" fill="#111811" transform="rotate(-5 200 140)" />
+                            <!-- Buildings -->
+                            <rect x="80" y="70" width="50" height="70" rx="4" fill="#1a1a1a" stroke="#22c55e" stroke-width="1" />
+                            <rect x="85" y="80" width="12" height="12" rx="2" fill="#22c55e" opacity="0.3" />
+                            <rect x="105" y="80" width="12" height="12" rx="2" fill="#22c55e" opacity="0.3" />
+                            <!-- Trees -->
+                            <rect x="250" y="130" width="16" height="40" fill="#15803d" opacity="0.5" />
+                            <circle cx="258" cy="120" r="25" fill="#166534" opacity="0.4" />
+                            <circle cx="290" cy="150" r="20" fill="#15803d" opacity="0.5" />
+                            <rect x="290" y="155" width="12" height="25" fill="#166534" opacity="0.4" />
+                            <!-- Player -->
+                            <circle cx="180" cy="160" r="10" fill="#4ade80" />
+                            <circle cx="180" cy="160" r="10" fill="none" stroke="#22c55e" stroke-width="1" />
+                            <!-- Path -->
+                            <rect x="140" y="155" width="30" height="10" rx="5" fill="#22c55e" opacity="0.1" />
+                            <rect x="180" y="155" width="50" height="10" rx="5" fill="#22c55e" opacity="0.1" />
+                            <!-- HUD -->
+                            <rect x="20" y="10" width="80" height="20" rx="10" fill="#1a1a1a" />
+                            <text x="60" y="24" text-anchor="middle" fill="white" font-size="9" font-family="monospace">HP 100</text>
+                            <rect x="290" y="10" width="90" height="20" rx="10" fill="#1a1a1a" />
+                            <text x="335" y="24" text-anchor="middle" fill="white" font-size="9" font-family="monospace">Quest: Explore</text>
+                        </svg>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-900/50 backdrop-blur-sm text-xs font-mono text-green-400 border border-green-500/20">Godot 4</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">🏰 Dungeon Crawler</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">A top-down action RPG with procedurally generated dungeons, combat system, loot drops, and a quest tracking system built in Godot 4.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">Godot 4</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">GDScript</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">A* Pathfinding</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-sm text-white hover:text-green-400 transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                Watch Trailer
+                            </a>
+                            <a href="#" class="text-sm text-gray-500 hover:text-white transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 - Java Game Tool -->
+                <div class="project-card reveal delay-100 rounded-2xl overflow-hidden bg-card" data-category="java">
+                    <div class="relative h-52 overflow-hidden bg-gradient-to-br from-green-700/20 to-emerald-900/20">
+                        <svg viewBox="0 0 400 250" class="w-full h-full card-image transition-transform duration-500">
+                            <rect width="400" height="250" fill="#0a0a0a" />
+                            <!-- Window -->
+                            <rect x="50" y="30" width="300" height="190" rx="8" fill="#111" stroke="#22c55e" stroke-width="1" />
+                            <!-- Title Bar -->
+                            <rect x="50" y="30" width="300" height="24" rx="8" fill="#1a1a1a" />
+                            <rect x="50" y="46" width="300" height="8" fill="#1a1a1a" />
+                            <circle cx="75" cy="42" r="5" fill="#ef4444" />
+                            <circle cx="90" cy="42" r="5" fill="#eab308" />
+                            <circle cx="105" cy="42" r="5" fill="#22c55e" />
+                            <text x="200" y="46" text-anchor="middle" fill="white" font-size="8" font-family="monospace">Asset Pipeline Tool</text>
+                            <!-- Sidebar -->
+                            <rect x="50" y="54" width="80" height="166" fill="#0a0a0a" />
+                            <rect x="60" y="64" width="60" height="16" rx="4" fill="#15803d" opacity="0.3" />
+                            <rect x="60" y="88" width="60" height="16" rx="4" fill="#22c55e" opacity="0.1" />
+                            <rect x="60" y="112" width="60" height="16" rx="4" fill="#22c55e" opacity="0.1" />
+                            <rect x="60" y="136" width="60" height="16" rx="4" fill="#22c55e" opacity="0.1" />
+                            <!-- Main Area -->
+                            <rect x="140" y="64" width="200" height="80" rx="4" fill="#1a1a1a" />
+                            <rect x="155" y="78" width="140" height="6" rx="3" fill="#22c55e" opacity="0.3" />
+                            <rect x="155" y="92" width="100" height="6" rx="3" fill="#333" />
+                            <rect x="155" y="106" width="120" height="6" rx="3" fill="#333" />
+                            <!-- Progress Bar -->
+                            <rect x="140" y="158" width="200" height="12" rx="6" fill="#1a1a1a" />
+                            <rect x="140" y="158" width="140" height="12" rx="6" fill="#22c55e" opacity="0.6" />
+                            <text x="290" y="188" text-anchor="end" fill="#22c55e" font-size="9" font-family="monospace">70% Complete</text>
+                        </svg>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-900/50 backdrop-blur-sm text-xs font-mono text-green-400 border border-green-500/20">Java</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">🔧 Game Asset Pipeline</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">A Java-based game development tool for batch processing textures, managing sprite sheets, auto-generating collision shapes, and organizing project assets.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">Java</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">JavaFX</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">ImageIO</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-sm text-white hover:text-green-400 transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                Download
+                            </a>
+                            <a href="#" class="text-sm text-gray-500 hover:text-white transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 - Python Game Tool -->
+                <div class="project-card reveal delay-200 rounded-2xl overflow-hidden bg-card" data-category="godot">
+                    <div class="relative h-52 overflow-hidden bg-gradient-to-br from-green-500/20 to-teal-900/20">
+                        <svg viewBox="0 0 400 250" class="w-full h-full card-image transition-transform duration-500">
+                            <rect width="400" height="250" fill="#0a0a0a" />
+                            <!-- Space Background -->
+                            <circle cx="50" cy="50" r="1" fill="white" opacity="0.5" />
+                            <circle cx="150" cy="30" r="1" fill="white" opacity="0.3" />
+                            <circle cx="300" cy="80" r="1" fill="white" opacity="0.6" />
+                            <circle cx="350" cy="200" r="1" fill="white" opacity="0.4" />
+                            <circle cx="200" cy="220" r="1" fill="white" opacity="0.5" />
+                            <circle cx="80" cy="180" r="1" fill="white" opacity="0.3" />
+                            <!-- Planet -->
+                            <circle cx="200" cy="130" r="60" fill="#111811" stroke="#22c55e" stroke-width="2" />
+                            <circle cx="200" cy="130" r="60" fill="url(#planetGrad)" opacity="0.3" />
+                            <defs>
+                                <radialGradient id="planetGrad" cx="35%" cy="35%">
+                                    <stop offset="0%" style="stop-color:#4ade80;stop-opacity:0.8" />
+                                    <stop offset="100%" style="stop-color:#15803d;stop-opacity:0" />
+                                </radialGradient>
+                            </defs>
+                            <!-- Spaceship -->
+                            <polygon points="280,80 300,100 280,90" fill="#4ade80" />
+                            <rect x="270" y="95" width="10" height="4" fill="#fbbf24" opacity="0.6" />
+                            <!-- Asteroids -->
+                            <rect x="80" y="80" width="16" height="14" rx="4" fill="#333" />
+                            <rect x="100" y="100" width="12" height="10" rx="3" fill="#444" />
+                            <!-- HUD -->
+                            <rect x="20" y="20" width="100" height="30" rx="15" fill="#1a1a1a" border="#22c55e" />
+                            <text x="70" y="39" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">SCORE: 4,200</text>
+                            <rect x="280" y="20" width="100" height="30" rx="15" fill="#1a1a1a" />
+                            <text x="330" y="39" text-anchor="middle" fill="#4ade80" font-size="10" font-family="monospace">WAVE 7</text>
+                        </svg>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-900/50 backdrop-blur-sm text-xs font-mono text-green-400 border border-green-500/20">Godot 4</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">🚀 Void Drifter</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">A space shooter with wave-based enemies, power-up system, screen shake effects, and a dynamic soundtrack. Built for a 48-hour game jam.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">Godot 4</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">GDScript</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">Game Jam</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-sm text-white hover:text-green-400 transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                Play Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 - Web Game Page -->
+                <div class="project-card reveal delay-300 rounded-2xl overflow-hidden bg-card" data-category="web">
+                    <div class="relative h-52 overflow-hidden bg-gradient-to-br from-emerald-500/20 to-green-900/20">
+                        <svg viewBox="0 0 400 250" class="w-full h-full card-image transition-transform duration-500">
+                            <rect width="400" height="250" fill="#0a0a0a" />
+                            <!-- Browser -->
+                            <rect x="40" y="30" width="320" height="190" rx="8" fill="#111" />
+                            <rect x="40" y="30" width="320" height="28" rx="8" fill="#1a1a1a" />
+                            <rect x="40" y="50" width="320" height="8" fill="#1a1a1a" />
+                            <circle cx="60" cy="44" r="5" fill="#ef4444" />
+                            <circle cx="75" cy="44" r="5" fill="#eab308" />
+                            <circle cx="90" cy="44" r="5" fill="#22c55e" />
+                            <rect x="110" y="40" width="200" height="14" rx="7" fill="#0a0a0a" />
+                            <text x="210" y="49" text-anchor="middle" fill="#666" font-size="7" font-family="monospace">reinhart-games.io/play</text>
+                            <!-- Game Content -->
+                            <rect x="60" y="70" width="280" height="130" rx="4" fill="#151515" />
+                            <text x="200" y="120" text-anchor="middle" fill="#22c55e" font-size="16" font-weight="bold" font-family="Inter">🎮 PLAY GAME</text>
+                            <rect x="150" y="135" width="100" height="28" rx="14" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1" />
+                            <text x="200" y="153" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">START</text>
+                        </svg>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-900/50 backdrop-blur-sm text-xs font-mono text-green-400 border border-green-500/20">Web</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">🌐 Game Portfolio Site</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">A responsive website showcasing all my game projects with embedded WebGL demos, trailer videos, and a blog section for dev logs.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">HTML</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">JavaScript</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-400 text-xs font-mono">CSS</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-sm text-white hover:text-green-400 transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                Visit Site
+                            </a>
+                            <a href="#" class="text-sm text-gray-500 hover:text-white transition-colors flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="relative py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal">
+                <span class="font-mono text-green-500 text-sm tracking-wider uppercase">03. Skills & Tools</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-12">My <span class="gradient-text">Tech Stack</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <div class="reveal delay-100">
+                    <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        Programming & Engines
+                    </h3>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm text-gray-300">Godot Engine (GDScript)</span>
+                                <span class="text-sm text-green-400 font-mono">92%</span>
+                            </div>
+                            <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style="width: 0%" data-width="92%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm text-gray-300">Java (Game Dev & Tools)</span>
+                                <span class="text-sm text-green-400 font-mono">88%</span>
+                            </div>
+                            <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style="width: 0%" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm text-gray-300">Python</span>
+                                <span class="text-sm text-green-400 font-mono">45%</span>
+                            </div>
+                            <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style="width: 0%" data-width="45%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm text-gray-300">HTML / CSS</span>
+                                <span class="text-sm text-green-400 font-mono">55%</span>
+                            </div>
+                            <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style="width: 0%" data-width="55%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm text-gray-300">JavaScript</span>
+                                <span class="text-sm text-green-400 font-mono">50%</span>
+                            </div>
+                            <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style="width: 0%" data-width="50%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal delay-200">
+                    <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+                        Game Dev Tools
+                    </h3>
+                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-600/20 flex items-center justify-center text-green-400 font-bold text-xs">G</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Godot 4</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-600/20 flex items-center justify-center text-green-400 font-bold text-xs">G3</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Godot 3</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-red-500/20 to-orange-600/20 flex items-center justify-center text-red-400 font-bold text-xs">J</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Java</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-600/20 flex items-center justify-center text-blue-400 font-bold text-xs">PY</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Python</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center text-yellow-400 font-bold text-xs">PS</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Aseprite</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center text-purple-400 font-bold text-xs">B</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Blender</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500/20 to-amber-600/20 flex items-center justify-center text-orange-400 font-bold text-xs">GIT</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Git</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-400/20 to-green-600/20 flex items-center justify-center text-green-300 font-bold text-xs">FM</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">FMOD</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-lime-600/20 flex items-center justify-center text-lime-400 font-bold text-xs">T</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">Tiled</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-600/20 flex items-center justify-center text-blue-400 font-bold text-xs">VS</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">VS Code</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-600/20 flex items-center justify-center text-green-400 font-bold text-xs">H</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">HTML</span>
+                        </div>
+                        <div class="tech-item group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all cursor-default">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 flex items-center justify-center text-yellow-400 font-bold text-xs">JS</div>
+                            <span class="text-xs text-gray-400 group-hover:text-green-400 transition-colors">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="relative py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal">
+                <span class="font-mono text-green-500 text-sm tracking-wider uppercase">04. Experience</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-12">My <span class="gradient-text">Journey</span></h2>
+            </div>
+
+            <div class="reveal delay-200 space-y-0">
+                <div class="relative pl-8 md:pl-12 pb-12 border-l border-green-900/30 last:pb-0 group">
+                    <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-green-500 border-4 border-dark group-hover:scale-125 transition-transform shadow-lg shadow-green-500/30"></div>
+                    <div class="md:pl-8">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3">
+                            <h3 class="text-xl font-semibold text-white">Indie Game Developer</h3>
+                            <span class="inline-flex px-3 py-1 rounded-full bg-green-900/30 text-green-400 text-xs font-mono w-fit">2023 - Present</span>
+                        </div>
+                        <p class="text-green-400 font-medium mb-3">Reinhart Projects</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">Developing original indie games using Godot Engine. Managing the full development pipeline from concept art and level design to programming, testing, and publishing on itch.io. Building reusable game systems and tools in Java for asset management.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Godot 4</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">GDScript</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Java</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Game Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 pb-12 border-l border-green-900/30 group">
+                    <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-emerald-500 border-4 border-dark group-hover:scale-125 transition-transform shadow-lg shadow-emerald-500/30"></div>
+                    <div class="md:pl-8">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3">
+                            <h3 class="text-xl font-semibold text-white">Java Developer & Game Modder</h3>
+                            <span class="inline-flex px-3 py-1 rounded-full bg-emerald-900/30 text-emerald-400 text-xs font-mono w-fit">2022 - 2023</span>
+                        </div>
+                        <p class="text-green-400 font-medium mb-3">Freelance / Personal Projects</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">Built custom game mods and plugins in Java for popular game platforms. Created server-side tools, automated testing scripts in Python, and developed web pages for game-related communities using HTML and JavaScript.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Java</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Python</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">HTML</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 pb-12 border-l border-green-900/30 group">
+                    <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-green-600 border-4 border-dark group-hover:scale-125 transition-transform shadow-lg shadow-green-600/30"></div>
+                    <div class="md:pl-8">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3">
+                            <h3 class="text-xl font-semibold text-white">Game Jam Participant</h3>
+                            <span class="inline-flex px-3 py-1 rounded-full bg-green-900/30 text-green-400 text-xs font-mono w-fit">2021 - 2022</span>
+                        </div>
+                        <p class="text-green-400 font-medium mb-3">Ludum Dare, GMTK Jam</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">Participated in multiple game jams, building complete games from scratch in 48-72 hours. Learned rapid prototyping, scope management, and polished game feel techniques using Godot and basic web technologies for game jam landing pages.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Godot</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Pixel Art</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Game Design</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">SFX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 border-l border-green-900/30 group">
+                    <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-green-700 border-4 border-dark group-hover:scale-125 transition-transform"></div>
+                    <div class="md:pl-8">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3">
+                            <h3 class="text-xl font-semibold text-white">Started Coding Journey</h3>
+                            <span class="inline-flex px-3 py-1 rounded-full bg-green-900/30 text-green-400 text-xs font-mono w-fit">2020 - 2021</span>
+                        </div>
+                        <p class="text-green-400 font-medium mb-3">Self-Taught</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">Discovered passion for game development and began learning programming fundamentals. Started with Java basics, moved to HTML/CSS for web pages, then found Godot Engine which became my primary game development tool.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Java</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">HTML/CSS</span>
+                            <span class="px-2 py-1 rounded bg-green-900/20 text-green-400 text-xs">Learning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="relative py-24 md:py-32">
+        <div class="glow-orb w-96 h-96 bg-green-500/10 bottom-0 left-1/2 -translate-x-1/2"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="reveal">
+                <span class="font-mono text-green-500 text-sm tracking-wider uppercase">05. Get in Touch</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-4">Let's Build Something <span class="gradient-text">Awesome</span></h2>
+                <p class="text-gray-400 max-w-xl text-lg">Have a game idea, need a Godot developer, or want to collaborate on a project? I'd love to hear from you!</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 mt-16">
+                <div class="reveal delay-200">
+                    <form id="contactForm" class="space-y-5">
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Name</label>
+                                <input type="text" placeholder="Your Name" class="input-field w-full px-4 py-3 rounded-xl text-white text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Email</label>
+                                <input type="email" placeholder="your@email.com" class="input-field w-full px-4 py-3 rounded-xl text-white text-sm" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Subject</label>
+                            <input type="text" placeholder="Game Collaboration?" class="input-field w-full px-4 py-3 rounded-xl text-white text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Message</label>
+                            <textarea rows="5" placeholder="Tell me about your project or idea..." class="input-field w-full px-4 py-3 rounded-xl text-white text-sm resize-none" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-4 rounded-xl font-semibold text-white flex items-center justify-center gap-2">
+                            Send Message
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                        </button>
+                    </form>
+                    <div id="formSuccess" class="hidden mt-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 text-sm text-center">
+                        ✅ Message sent successfully! I'll get back to you soon.
+                    </div>
+                </div>
+
+                <div class="reveal delay-300 space-y-8">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0 border border-green-500/20">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">Email</h4>
+                            <a href="mailto:hello@reinhart.dev" class="text-gray-400 hover:text-green-400 transition-colors">hello@reinhart.dev</a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0 border border-green-500/20">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">Location</h4>
+                            <p class="text-gray-400">Indonesia</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0 border border-green-500/20">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">Availability</h4>
+                            <p class="text-gray-400">Open for game projects & commissions</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-8 border-t border-green-900/30">
+                        <h4 class="text-white font-semibold mb-4">Follow Me</h4>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-12 h-12 rounded-xl bg-white/5 border border-green-900/30 flex items-center justify-center text-gray-400 hover:text-green-400 hover:border-green-500/30 hover:bg-green-500/5 transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-xl bg-white/5 border border-green-900/30 flex items-center justify-center text-gray-400 hover:text-green-400 hover:border-green-500/30 hover:bg-green-500/5 transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-xl bg-white/5 border border-green-900/30 flex items-center justify-center text-gray-400 hover:text-green-400 hover:border-green-500/30 hover:bg-green-500/5 transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-xl bg-white/5 border border-green-900/30 flex items-center justify-center text-gray-400 hover:text-green-400 hover:border-green-500/30 hover:bg-green-500/5 transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 2.614.115.748-.196 1.562-.296 2.381-.307 1.52-.144 2.962.571 2.962.571 1.494 1.327 2.66 1.614 3.454 1.614.562 0 1.16-.084 1.694-.141.604-.234 1.175-.896 1.175-1.808 0-1.307-.08-2.371-.08-2.371-.067-.17-.166-.29-.294-.364.246-.028.494-.034.742-.034 1.12 0 2.24.268 2.24.268.445.19.64.606.64 1.218 0 .562-.03 1.02-.078 1.38-.38.244-.73.646-.73 1.56 0 1.494 1.358 2.08 2.26 2.192.572 1.032.444 1.734.22 2.15-.482.48-1.08.78-1.568.955"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-green-900/30 py-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-md bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center font-mono font-bold text-white text-xs">R</div>
+                <span class="text-sm text-gray-500">© 2026 Reinhart Projects. All rights reserved.</span>
+            </div>
+            <p class="text-sm text-gray-500">🎮 Designed & Built by Reinhart</p>
+        </div>
+    </footer>
+
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 flex items-center justify-center opacity-0 pointer-events-none transition-all hover:bg-green-500/30 z-40">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(34, 197, 94, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            const numParticles = Math.min(80, window.innerWidth / 20);
+            particlesArray = [];
+            for (let i = 0; i < numParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            for (let i = 0; i < particlesArray.length; i++) {
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(34, 197, 94, ${0.08 * (1 - distance / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const skillBars = document.querySelectorAll('.skill-bar-fill');
+
+        function checkReveal() {
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 100;
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('active');
+                }
+            });
+            skillBars.forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 50 && !bar.classList.contains('animated')) {
+                    bar.style.width = bar.getAttribute('data-width');
+                    bar.classList.add('animated');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+        checkReveal();
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('bg-green-900/30', 'text-gray-400');
+                });
+                btn.classList.add('active');
+                btn.classList.remove('bg-green-900/30', 'text-gray-400');
+
+                const filter = btn.getAttribute('data-filter');
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            contactForm.style.opacity = '0';
+            contactForm.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                contactForm.style.display = 'none';
+                formSuccess.classList.remove('hidden');
+                formSuccess.style.animation = 'fadeInUp 0.5s ease forwards';
+            }, 300);
+        });
+
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.style.opacity = '1';
+                backToTop.style.pointerEvents = 'auto';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.pointerEvents = 'none';
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
