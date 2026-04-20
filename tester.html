@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faisal Portfolio</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #00ff00;
+        color: black;
+    }
+
+    /* Navbar */
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: black;
+        padding: 15px;
+        text-align: center;
+        z-index: 1000;
+    }
+
+    nav a {
+        color: #00ff00;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    nav a:hover {
+        color: white;
+    }
+
+    /* Sections */
+    section {
+        height: 100vh;
+        padding: 80px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 0.8s;
+    }
+
+    section.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    /* Projects */
+    .projects {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .card {
+        background: black;
+        color: #00ff00;
+        padding: 20px;
+        border-radius: 10px;
+        width: 200px;
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: scale(1.1);
+    }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 20px;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<!-- Home -->
+<section id="home">
+    <h1>Faisal</h1>
+    <p>Welcome to my portfolio</p>
+</section>
+
+<!-- About -->
+<section id="about">
+    <h2>About Me</h2>
+    <p>I am a developer learning programming and building projects.</p>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+        <div class="card">Project 1</div>
+        <div class="card">Project 2</div>
+        <div class="card">Project 3</div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+    <h2>Contact</h2>
+    <p>Email: diamondcreeper278</p>
+</section>
+
+<footer>
+    <p>© 2026 Faisal</p>
+</footer>
+
+<script>
+    // Fade-in animation on scroll
+    const sections = document.querySelectorAll("section");
+
+    window.addEventListener("scroll", () => {
+        sections.forEach(section => {
+            const top = section.getBoundingClientRect().top;
+            if (top < window.innerHeight - 100) {
+                section.classList.add("show");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
